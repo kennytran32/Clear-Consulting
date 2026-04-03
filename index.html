@@ -613,9 +613,10 @@
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
   // ── REPLACE THESE 3 VALUES WITH YOUR EMAILJS KEYS ──
-  const EMAILJS_PUBLIC_KEY  = 'dL6t8VE4zgLA-M_dD';
-  const EMAILJS_SERVICE_ID  = 'service_8qhokvk';
-  const EMAILJS_TEMPLATE_ID = 'template_vw57jbi';
+  const EMAILJS_PUBLIC_KEY      = 'dL6t8VE4zgLA-M_dD';
+  const EMAILJS_SERVICE_ID      = 'service_8qhokvk';
+  const EMAILJS_TEMPLATE_ID     = 'template_vw57jbi';
+  const EMAILJS_CONTACT_TEMPLATE = 'template_novg21i';
 
   if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
     emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
@@ -686,8 +687,8 @@
     const params = {
       from_name:  name,
       from_email: email,
-      revenue:    business || 'Not provided',
-      challenge:  message,
+      business:   business || 'Not provided',
+      message:    message,
       to_email:   'kenny@clearconsultingtx.com'
     };
 
@@ -696,7 +697,7 @@
       return;
     }
 
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CONTACT_TEMPLATE, params)
       .then(() => {
         showContactSuccess();
         resetContactBtn(btn);
