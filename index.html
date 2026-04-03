@@ -214,6 +214,24 @@
     .cta-strip p{font-size:0.95rem;color:rgba(255,255,255,0.6);}
     .cta-free-label{font-size:0.7rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin-bottom:0.6rem;}
 
+    /* CONTACT SECTION */
+    .contact-section{background:var(--navy2);padding:6rem 8%;border-top:1px solid var(--border);}
+    .contact-grid{display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start;margin-top:3.5rem;}
+    .contact-left h3{font-family:var(--serif);font-size:1.6rem;color:var(--white);font-weight:400;margin-bottom:1rem;}
+    .contact-left p{font-size:0.95rem;color:rgba(255,255,255,0.55);line-height:1.75;margin-bottom:1.5rem;}
+    .contact-detail{display:flex;align-items:center;gap:0.8rem;margin-bottom:0.8rem;}
+    .contact-detail-label{font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;color:var(--gold);min-width:80px;}
+    .contact-detail-value{font-size:0.88rem;color:rgba(255,255,255,0.65);}
+    .contact-form{background:rgba(255,255,255,0.03);border:1px solid rgba(255,255,255,0.07);padding:2.5rem;position:relative;}
+    .contact-form::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--gold),var(--gold2),transparent);}
+    .contact-form .form-row{margin-bottom:1rem;}
+    .contact-form .form-row label{display:block;font-size:0.7rem;font-weight:600;letter-spacing:0.12em;text-transform:uppercase;color:rgba(255,255,255,0.45);margin-bottom:0.4rem;}
+    .contact-form .form-row input,.contact-form .form-row textarea{width:100%;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);color:var(--white);padding:0.78rem 1rem;font-family:var(--sans);font-size:0.88rem;outline:none;transition:border-color 0.2s;resize:vertical;}
+    .contact-form .form-row input::placeholder,.contact-form .form-row textarea::placeholder{color:rgba(255,255,255,0.25);}
+    .contact-form .form-row input:focus,.contact-form .form-row textarea:focus{border-color:var(--gold);}
+    .contact-success{display:none;text-align:center;padding:1.5rem 0;}
+    .contact-success p{color:var(--gold);font-size:0.95rem;font-weight:600;}
+
     /* FOOTER */
     footer{background:#060e1c;padding:3rem 8%;display:flex;justify-content:space-between;align-items:center;border-top:1px solid rgba(201,168,76,0.1);}
     .footer-logo{font-family:var(--serif);font-size:1.2rem;color:var(--white);}
@@ -239,7 +257,7 @@
       .services-grid,.pricing-grid,.cases-grid,.testi-grid{grid-template-columns:1fr 1fr;}
       .about-grid{grid-template-columns:1fr;gap:3rem;}
       .process-steps{grid-template-columns:1fr 1fr;gap:2rem;}.process-steps::before{display:none;}
-      .pain-grid,.cta-strip{grid-template-columns:1fr;}
+      .pain-grid,.cta-strip,.contact-grid{grid-template-columns:1fr;}
     }
     @media(max-width:700px){
       nav ul{display:none;}section{padding:4rem 6%;}
@@ -272,6 +290,7 @@
     <li><a href="#pricing">Pricing</a></li>
     <li><a href="#about">About</a></li>
     <li><a href="#results">Results</a></li>
+    <li><a href="#contact">Contact</a></li>
   </ul>
   <button class="nav-btn" onclick="scrollToForm()">Book Free Call</button>
 </nav>
@@ -522,6 +541,67 @@
   </div>
 </section>
 
+<!-- CONTACT SECTION -->
+<section class="contact-section" id="contact">
+  <div class="section-label">Get in Touch</div>
+  <div class="section-title" style="color:var(--white)">Have a Question? Let's Talk.</div>
+  <div class="section-sub">Not ready to book a call yet? Send a message and Kenny will personally respond within 24 hours.</div>
+
+  <div class="contact-grid">
+    <div class="contact-left">
+      <h3>No pressure. Just a conversation.</h3>
+      <p>Whether you have a quick question about your financials, want to know if C.L.E.A.R. Consulting is the right fit, or just want to learn more — send a message and I will get back to you personally.</p>
+      <p>Every business is different. The best place to start is a real conversation.</p>
+
+      <div class="contact-detail">
+        <span class="contact-detail-label">Email</span>
+        <span class="contact-detail-value">kenny@clearconsultingtx.com</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Website</span>
+        <span class="contact-detail-value">clearconsultingtx.com</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">LinkedIn</span>
+        <span class="contact-detail-value">linkedin.com/in/kennytran97</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Location</span>
+        <span class="contact-detail-value">Plano, Texas — Serving businesses nationwide</span>
+      </div>
+      <div class="contact-detail">
+        <span class="contact-detail-label">Response</span>
+        <span class="contact-detail-value">Within 24 hours — usually same day</span>
+      </div>
+    </div>
+
+    <div class="contact-form" id="contact-form-wrap">
+      <div class="form-row">
+        <label>Your Name</label>
+        <input type="text" id="c-name" placeholder="Jane Smith" autocomplete="name"/>
+      </div>
+      <div class="form-row">
+        <label>Your Email</label>
+        <input type="email" id="c-email" placeholder="jane@yourbusiness.com" autocomplete="email"/>
+      </div>
+      <div class="form-row">
+        <label>Your Business (Optional)</label>
+        <input type="text" id="c-business" placeholder="Business name"/>
+      </div>
+      <div class="form-row">
+        <label>Your Question or Message</label>
+        <textarea id="c-message" placeholder="Share your goals or what you are looking to improve in your business." rows="5"></textarea>
+      </div>
+      <button class="btn-submit" id="contactBtn" onclick="submitContact()" style="margin-top:0.5rem;">Send Message →</button>
+      <p class="card-privacy" style="margin-top:0.8rem;">Your information is never shared or sold.</p>
+
+      <div class="contact-success" id="contact-success">
+        <p>✦ Message received! Kenny will respond within 24 hours.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- FOOTER -->
 <footer>
   <div class="footer-logo">C.L.E.A.R.<span> Consulting LLC</span></div>
@@ -589,7 +669,65 @@
       });
   }
 
-  function showSuccess(name, email) {
+  function submitContact() {
+    const name    = document.getElementById('c-name').value.trim();
+    const email   = document.getElementById('c-email').value.trim();
+    const business= document.getElementById('c-business').value.trim();
+    const message = document.getElementById('c-message').value.trim();
+    const btn     = document.getElementById('contactBtn');
+
+    if (!name)                          { shakeContact('c-name');    return; }
+    if (!email || !email.includes('@')) { shakeContact('c-email');   return; }
+    if (!message)                       { shakeContact('c-message'); return; }
+
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+
+    const params = {
+      from_name:  name,
+      from_email: email,
+      revenue:    business || 'Not provided',
+      challenge:  message,
+      to_email:   'kenny@clearconsultingtx.com'
+    };
+
+    if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
+      setTimeout(() => { showContactSuccess(); resetContactBtn(btn); }, 800);
+      return;
+    }
+
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
+      .then(() => {
+        showContactSuccess();
+        resetContactBtn(btn);
+      })
+      .catch(err => {
+        console.error(err);
+        alert('Something went wrong. Please email kenny@clearconsultingtx.com directly.');
+        resetContactBtn(btn);
+      });
+  }
+
+  function showContactSuccess() {
+    document.getElementById('contact-form-wrap').style.opacity = '0.3';
+    document.getElementById('contact-form-wrap').style.pointerEvents = 'none';
+    document.getElementById('contact-success').style.display = 'block';
+    ['c-name','c-email','c-business','c-message'].forEach(id => {
+      document.getElementById(id).value = '';
+    });
+  }
+
+  function resetContactBtn(btn) {
+    btn.textContent = 'Send Message →';
+    btn.disabled = false;
+  }
+
+  function shakeContact(id) {
+    const el = document.getElementById(id);
+    el.style.borderColor = '#c0392b';
+    el.style.animation = 'shake 0.35s ease';
+    setTimeout(() => { el.style.animation = ''; el.style.borderColor = ''; }, 500);
+  }
     document.getElementById('successMsg').textContent =
       `Thanks, ${name}! Your free 5-minute consultation is reserved. Kenny will follow up at ${email} within 24 hours.`;
     document.getElementById('successOverlay').classList.add('show');
