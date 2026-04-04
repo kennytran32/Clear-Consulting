@@ -555,7 +555,7 @@
 
       <div class="contact-detail">
         <span class="contact-detail-label">Email</span>
-        <span class="contact-detail-value">kennytran@clearconsultingtx.com</span>
+        <span class="contact-detail-value">trankenny32@gmail.com</span>
       </div>
       <div class="contact-detail">
         <span class="contact-detail-label">Website</span>
@@ -612,26 +612,24 @@
 <!-- EmailJS -->
 <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 <script>
-  // ── REPLACE THESE 3 VALUES WITH YOUR EMAILJS KEYS ──
-  const EMAILJS_PUBLIC_KEY      = 'dL6t8VE4zgLA-M_dD';
-  const EMAILJS_SERVICE_ID      = 'service_8qhokvk';
-  const EMAILJS_TEMPLATE_ID     = 'template_vw57jbi';
+  const EMAILJS_PUBLIC_KEY       = 'dL6t8VE4zgLA-M_dD';
+  const EMAILJS_SERVICE_ID       = 'service_8qhokvk';
+  const EMAILJS_TEMPLATE_ID      = 'template_vw57jbi';
   const EMAILJS_CONTACT_TEMPLATE = 'template_novg21i';
 
-  if (EMAILJS_PUBLIC_KEY !== 'YOUR_PUBLIC_KEY') {
-    emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
-  }
+  emailjs.init({ publicKey: EMAILJS_PUBLIC_KEY });
 
   function scrollToForm() {
     document.getElementById('consultation').scrollIntoView({ behavior: 'smooth' });
   }
 
+  /* ── BOOKING FORM ── */
   function submitForm() {
-    const name      = document.getElementById('h-name').value.trim();
-    const email     = document.getElementById('h-email').value.trim();
-    const revenue   = document.getElementById('h-revenue').value;
-    const challenge = document.getElementById('h-challenge').value;
-    const btn       = document.getElementById('submitBtn');
+    var name      = document.getElementById('h-name').value.trim();
+    var email     = document.getElementById('h-email').value.trim();
+    var revenue   = document.getElementById('h-revenue').value;
+    var challenge = document.getElementById('h-challenge').value;
+    var btn       = document.getElementById('submitBtn');
 
     if (!name)                         { shake('h-name');      return; }
     if (!email || !email.includes('@')){ shake('h-email');     return; }
@@ -641,109 +639,81 @@
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
-    const params = {
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, {
       from_name:  name,
       from_email: email,
+      reply_to:   email,
       revenue:    revenue,
       challenge:  challenge,
-      to_email:   'kennytran@clearconsultingtx.com'
-    };
-
-    if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
-      // Preview mode — keys not set yet
-      setTimeout(() => { showSuccess(name, email); resetBtn(btn); }, 800);
-      return;
-    }
-
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, params)
-      .then(() => {
-        showSuccess(name, email);
-        resetBtn(btn);
-        ['h-name','h-email','h-revenue','h-challenge'].forEach(id => {
-          const el = document.getElementById(id); el.value = '';
-        });
-      })
-      .catch(err => {
-        console.error(err);
-        alert('Something went wrong. Please email kennytran@clearconsultingtx.com directly.');
-        resetBtn(btn);
-      });
+      message:    'Revenue Range: ' + revenue + '\nBiggest Challenge: ' + challenge,
+      to_email:   'trankenny32@gmail.com'
+    }).then(function() {
+      document.getElementById('successMsg').textContent = 'Thanks, ' + name + '! Your free 5-minute consultation is reserved. Kenny will follow up at ' + email + ' within 24 hours.';
+      document.getElementById('successOverlay').classList.add('show');
+      btn.textContent = 'Reserve My Free Call \u2192';
+      btn.disabled = false;
+      ['h-name','h-email','h-revenue','h-challenge'].forEach(function(id){ document.getElementById(id).value = ''; });
+    }).catch(function(err) {
+      console.error('Booking error:', err);
+      alert('Error ' + (err.status||'') + ': ' + (err.text||JSON.stringify(err)) + '\n\nPlease email trankenny32@gmail.com directly.');
+      btn.textContent = 'Reserve My Free Call \u2192';
+      btn.disabled = false;
+    });
   }
 
+  /* ── CONTACT FORM ── */
   function submitContact() {
-    const name    = document.getElementById('c-name').value.trim();
-    const email   = document.getElementById('c-email').value.trim();
-    const business= document.getElementById('c-business').value.trim();
-    const message = document.getElementById('c-message').value.trim();
-    const btn     = document.getElementById('contactBtn');
+    var name     = document.getElementById('c-name').value.trim();
+    var email    = document.getElementById('c-email').value.trim();
+    var business = document.getElementById('c-business').value.trim();
+    var message  = document.getElementById('c-message').value.trim();
+    var btn      = document.getElementById('contactBtn');
 
-    if (!name)                          { shakeContact('c-name');    return; }
-    if (!email || !email.includes('@')) { shakeContact('c-email');   return; }
-    if (!message)                       { shakeContact('c-message'); return; }
+    if (!name)                          { shakeEl('c-name');    return; }
+    if (!email || !email.includes('@')) { shakeEl('c-email');   return; }
+    if (!message)                       { shakeEl('c-message'); return; }
 
     btn.textContent = 'Sending...';
     btn.disabled = true;
 
-    const params = {
+    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CONTACT_TEMPLATE, {
       from_name:  name,
       from_email: email,
+      reply_to:   email,
       business:   business || 'Not provided',
       message:    message,
-      to_email:   'kennytran@clearconsultingtx.com'
-    };
-
-    if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
-      setTimeout(() => { showContactSuccess(); resetContactBtn(btn); }, 800);
-      return;
-    }
-
-    emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_CONTACT_TEMPLATE, params)
-      .then(() => {
-        showContactSuccess();
-        resetContactBtn(btn);
-      })
-      .catch(err => {
-        console.error(err);
-        alert('Something went wrong. Please email kennytran@clearconsultingtx.com directly.');
-        resetContactBtn(btn);
-      });
-  }
-
-  function showContactSuccess() {
-    document.getElementById('contact-form-wrap').style.opacity = '0.3';
-    document.getElementById('contact-form-wrap').style.pointerEvents = 'none';
-    document.getElementById('contact-success').style.display = 'block';
-    ['c-name','c-email','c-business','c-message'].forEach(id => {
-      document.getElementById(id).value = '';
+      challenge:  message,
+      revenue:    business || 'Not provided',
+      to_email:   'trankenny32@gmail.com'
+    }).then(function() {
+      document.getElementById('contact-success').style.display = 'block';
+      document.getElementById('contact-form-wrap').style.opacity = '0.3';
+      document.getElementById('contact-form-wrap').style.pointerEvents = 'none';
+      btn.textContent = 'Send Message \u2192';
+      btn.disabled = false;
+      ['c-name','c-email','c-business','c-message'].forEach(function(id){ document.getElementById(id).value = ''; });
+    }).catch(function(err) {
+      console.error('Contact error:', err);
+      alert('Error ' + (err.status||'') + ': ' + (err.text||JSON.stringify(err)) + '\n\nPlease email trankenny32@gmail.com directly.');
+      btn.textContent = 'Send Message \u2192';
+      btn.disabled = false;
     });
   }
 
-  function resetContactBtn(btn) {
-    btn.textContent = 'Send Message →';
-    btn.disabled = false;
-  }
-
-  function shakeContact(id) {
-    const el = document.getElementById(id);
-    el.style.borderColor = '#c0392b';
-    el.style.animation = 'shake 0.35s ease';
-    setTimeout(() => { el.style.animation = ''; el.style.borderColor = ''; }, 500);
-  }
-    document.getElementById('successMsg').textContent =
-      `Thanks, ${name}! Your free 5-minute consultation is reserved. Kenny will follow up at ${email} within 24 hours.`;
-    document.getElementById('successOverlay').classList.add('show');
-  }
-
-  function resetBtn(btn) {
-    btn.textContent = 'Reserve My Free Call →';
-    btn.disabled = false;
-  }
-
+  /* ── SUCCESS OVERLAY CLOSE ── */
+  // called by the close button on the overlay
   function shake(id) {
-    const el = document.getElementById(id);
+    var el = document.getElementById(id);
     el.style.borderColor = '#c0392b';
     el.style.animation = 'shake 0.35s ease';
-    setTimeout(() => { el.style.animation = ''; el.style.borderColor = ''; }, 500);
+    setTimeout(function(){ el.style.animation = ''; el.style.borderColor = ''; }, 500);
+  }
+
+  function shakeEl(id) {
+    var el = document.getElementById(id);
+    el.style.borderColor = '#c0392b';
+    el.style.animation = 'shake 0.35s ease';
+    setTimeout(function(){ el.style.animation = ''; el.style.borderColor = ''; }, 500);
   }
 </script>
 </body>
